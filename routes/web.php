@@ -10,6 +10,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Placeholder Auth Routes to prevent Landing Page crash
+Route::get('/login', function () { return "Login Feature Coming Soon"; })->name('login');
+Route::post('/login', function () { return "Login Process Coming Soon"; });
+Route::get('/register', function () { return "Register Feature Coming Soon"; })->name('register');
+Route::get('/forgot-password', function () { return "Forgot Password Feature Coming Soon"; })->name('password.request');
+
 Route::resource('prodis', ProdiController::class);
 Route::resource('mata-kuliah', MataKuliahController::class);
 Route::resource('mahasiswas', MahasiswaController::class);
