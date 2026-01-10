@@ -1,97 +1,149 @@
-@extends('layouts.app')
+@extends('layouts.admin')
+
+@section('title', 'Kelola Detail KRS')
 
 @section('content')
-<h1>Kelola KRS</h1>
-
-<div class="card mb-4">
-    <div class="card-header">Info Mahasiswa</div>
-    <div class="card-body">
-        <form action="{{ route('krs.update', $krs) }}" method="POST" class="row g-3">
-            @csrf
-            @method('PUT')
-            <div class="col-md-4">
-                <label class="form-label">Mahasiswa</label>
-                <input type="text" class="form-control" value="{{ $krs->mahasiswa->nama }} ({{ $krs->mahasiswa->nim }})" disabled>
-            </div>
-            <div class="col-md-3">
-                <label class="form-label">Tahun Ajaran</label>
-                <input type="text" name="tahun_ajaran" class="form-control" value="{{ $krs->tahun_ajaran }}">
-            </div>
-            <div class="col-md-3">
-                <label class="form-label">Semester</label>
-                <select name="semester" class="form-select">
-                    <option value="Ganjil" {{ $krs->semester == 'Ganjil' ? 'selected' : '' }}>Ganjil</option>
-                    <option value="Genap" {{ $krs->semester == 'Genap' ? 'selected' : '' }}>Genap</option>
-                </select>
-            </div>
-            <div class="col-md-2 d-flex align-items-end">
-                <button type="submit" class="btn btn-success w-100">Update Info</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-8">
-        <h3>Daftar Mata Kuliah Diambil</h3>
-        @if(session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
-        @endif
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Kode</th>
-                    <th>Mata Kuliah</th>
-                    <th>SKS</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @php $totalSks = 0; @endphp
-                @foreach($krs->krsDetails as $detail)
-                @php $totalSks += $detail->mataKuliah->sks; @endphp
-                <tr>
-                    <td>{{ $detail->mataKuliah->kode }}</td>
-                    <td>{{ $detail->mataKuliah->nama }}</td>
-                    <td>{{ $detail->mataKuliah->sks }}</td>
-                    <td>
-                        <form action="{{ route('krs-detail.destroy', $detail) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-sm btn-danger" onclick="return confirm('Hapus MK ini?')">Hapus</button>
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
-                <tr>
-                    <td colspan="2" class="text-end fw-bold">Total SKS</td>
-                    <td colspan="2" class="fw-bold">{{ $totalSks }}</td>
-                </tr>
-            </tbody>
-        </table>
-        <a href="{{ route('krs.index') }}" class="btn btn-secondary">Kembali</a>
+<div class="max-w-7xl mx-auto">
+    <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+            <h2 class="text-2xl font-bold text-slate-800 dark:text-white">Kelola Detail KRS</h2>
+            <p class="text-slate-500 dark:text-slate-400 text-sm">Atur mata kuliah yang diambil mahasiswa</p>
+        </div>
+        <a href="{{ route('krs.index') }}" class="inline-flex justify-center items-center px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium rounded-lg transition-colors shadow-sm">
+            <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Kembali ke Daftar
+        </a>
     </div>
 
-    <div class="col-md-4">
-        <h3>Tambah Mata Kuliah</h3>
-        <div class="card">
-            <div class="card-body">
-                <form action="{{ route('krs-detail.store', $krs) }}" method="POST">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Left Column: Student Info & Course List -->
+        <div class="lg:col-span-2 space-y-8">
+            <!-- Student & Period Info Card -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm p-8 transition-colors">
+                <h3 class="font-bold text-lg text-slate-800 dark:text-white mb-6 pb-4 border-b border-slate-100 dark:border-slate-700">Informasi KRS</h3>
+                <form action="{{ route('krs.update', $krs) }}" method="POST">
                     @csrf
-                    <div class="mb-3">
-                        <label>Pilih Mata Kuliah</label>
-                        <select name="mata_kuliah_id" class="form-select" required>
-                            <option value="">-- Pilih MK --</option>
+                    @method('PUT')
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Mahasiswa</label>
+                            <input type="text" class="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 font-medium" value="{{ $krs->mahasiswa->nama }} ({{ $krs->mahasiswa->nim }})" disabled>
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <label for="tahun_ajaran" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Tahun Ajaran</label>
+                            <input type="text" name="tahun_ajaran" id="tahun_ajaran" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-800 dark:text-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-900 outline-none transition-all" value="{{ $krs->tahun_ajaran }}">
+                        </div>
+
+                         <div class="space-y-2">
+                            <label for="semester" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Semester</label>
+                            <div class="relative">
+                                <select name="semester" id="semester" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-800 dark:text-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-900 outline-none transition-all appearance-none">
+                                    <option value="Ganjil" {{ $krs->semester == 'Ganjil' ? 'selected' : '' }}>Ganjil</option>
+                                    <option value="Genap" {{ $krs->semester == 'Genap' ? 'selected' : '' }}>Genap</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500 dark:text-slate-400">
+                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="flex items-end">
+                            <button type="submit" class="w-full px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg transition-colors shadow-sm">
+                                Simpan Perubahan Info
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Taken Courses List -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden transition-colors">
+                <div class="p-8 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/50">
+                    <h3 class="font-bold text-lg text-slate-800 dark:text-white">Daftar Mata Kuliah Diambil</h3>
+                    <span class="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-full text-xs font-bold">Total SKS: {{ $krs->krsDetails->sum(function($detail) { return $detail->mataKuliah->sks; }) }}</span>
+                </div>
+
+                @if(session('error'))
+                    <div class="m-8 mb-0 p-4 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-800 text-red-700 dark:text-red-300 font-medium">
+                        {{ session('error') }}
+                    </div>
+                @endif
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm text-slate-600 dark:text-slate-300">
+                        <thead class="bg-slate-50 dark:bg-slate-700/50 text-slate-500 dark:text-slate-400 font-bold uppercase text-xs tracking-wider border-b border-slate-200 dark:border-slate-700">
+                            <tr>
+                                <th class="px-8 py-5">Kode</th>
+                                <th class="px-8 py-5">Mata Kuliah</th>
+                                <th class="px-8 py-5 text-center">SKS</th>
+                                <th class="px-8 py-5 text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+                            @forelse($krs->krsDetails as $detail)
+                            <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                                <td class="px-8 py-5 font-mono text-slate-700 dark:text-slate-300">{{ $detail->mataKuliah->kode }}</td>
+                                <td class="px-8 py-5 font-medium text-slate-900 dark:text-white">{{ $detail->mataKuliah->nama }}</td>
+                                <td class="px-8 py-5 text-center">
+                                    <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-bold text-xs ring-1 ring-blue-100 dark:ring-blue-800">
+                                        {{ $detail->mataKuliah->sks }}
+                                    </span>
+                                </td>
+                                <td class="px-8 py-5 text-center">
+                                    <form action="{{ route('krs-detail.destroy', $detail) }}" method="POST" onsubmit="return confirm('Hapus MK ini dari KRS?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-500 hover:text-red-700 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 p-2 rounded-lg transition-colors" title="Hapus">
+                                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="4" class="px-8 py-12 text-center text-slate-400 dark:text-slate-500">
+                                    Belum ada mata kuliah yang diambil.
+                                </td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Add Course Widget -->
+        <div class="lg:col-span-1">
+             <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm p-8 sticky top-24 transition-colors">
+                <h3 class="font-bold text-lg text-slate-800 dark:text-white mb-6">Tambah Mata Kuliah</h3>
+                <form action="{{ route('krs-detail.store', $krs) }}" method="POST" class="space-y-4">
+                    @csrf
+                    
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Pilih Mata Kuliah</label>
+                        <select name="mata_kuliah_id" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-800 dark:text-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-900 outline-none transition-all text-sm" size="10" required>
                             @foreach($mataKuliahs as $mk)
-                                <option value="{{ $mk->id }}">
-                                    {{ $mk->kode }} - {{ $mk->nama }} ({{ $mk->sks }} SKS) - Sem {{ $mk->semester }}
+                                <option value="{{ $mk->id }}" class="py-2 px-2 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded cursor-pointer border-b border-slate-50 dark:border-slate-700 last:border-0">
+                                    {{ $mk->kode }} - {{ $mk->nama }} ({{ $mk->sks }} SKS)
                                 </option>
                             @endforeach
                         </select>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Pilih mata kuliah dari daftar di atas.</p>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">Tambahkan</button>
+
+                    <button type="submit" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-200 dark:shadow-none hover:shadow-indigo-300 dark:hover:shadow-indigo-900/30 transition-all transform hover:-translate-y-0.5">
+                        Tambahkan ke KRS
+                    </button>
                 </form>
-            </div>
+             </div>
         </div>
     </div>
 </div>
