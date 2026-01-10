@@ -4,17 +4,36 @@
 
 @section('content')
 <div class="w-full p-8 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden transition-colors">
-    <div class="p-6 border-b border-slate-100 dark:border-slate-700 flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-50/50 dark:bg-slate-800/50">
+    <div class="p-6 mb-6 border-b border-slate-100 dark:border-slate-700 flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-50/50 dark:bg-slate-800/50">
         <div>
             <h2 class="text-xl font-bold text-black">Data Mahasiswa</h2>
             <p class="text-black text-sm">Kelola informasi mahasiswa terdaftar</p>
         </div>
-        <a href="{{ route('mahasiswas.create') }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors shadow-sm hover:shadow-md">
-            <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-            </svg>
-            Tambah Mahasiswa
-        </a>
+        
+        <div class="flex items-center gap-4">
+            <!-- Search Bar -->
+            <div x-data="{ query: '{{ request('search') }}' }" class="relative">
+                <button class="absolute left-2 -translate-y-1/2 top-1/2 p-1">
+                    <svg width="17" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="search" class="w-5 h-5 text-gray-700">
+                        <path d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9" stroke="currentColor" stroke-width="1.333" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </button>
+                <input 
+                    class="input rounded-full px-5 py-2 border-2 border-transparent focus:outline-none focus:border-blue-500 placeholder-gray-400 transition-all duration-300 shadow-md"
+                    placeholder="Cari nama mahasiswa..." 
+                    type="text" 
+                    x-model="query" 
+                    @input.debounce.500ms="window.location.href = '{{ route('mahasiswas.index') }}?search=' + query"
+                />
+            </div>
+
+            <a href="{{ route('mahasiswas.create') }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors shadow-sm hover:shadow-md">
+                <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                Tambah Mahasiswa
+            </a>
+        </div>
     </div>
 
     <div class="overflow-x-auto">
@@ -39,7 +58,7 @@
                             <div class="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold text-xs uppercase">
                                 {{ substr($mhs->nama, 0, 2) }}
                             </div>
-                            <span class="font-medium text-slate-900 dark:text-white">{{ $mhs->nama }}</span>
+                            <span class="font-medium text-black">{{ $mhs->nama }}</span>
                         </div>
                         <div class="text-xs text-slate-400 mt-1 pl-11">{{ $mhs->email }}</div>
                     </td>

@@ -25,39 +25,38 @@
     <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20">
-                <!-- Left Side: Logo & Desktop Menu -->
-                <div class="flex items-center gap-8">
+                <!-- Left Side: Logo & Menu -->
+                <div class="flex items-center gap-8 overflow-hidden">
                     <!-- Logo -->
                     <div class="flex-shrink-0 flex items-center gap-3">
                         <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg transform rotate-3">K</div>
-                        <span class="font-bold text-2xl tracking-tight text-slate-900">Kampus<span class="text-indigo-600">SIM</span></span>
+                        <span class="font-bold text-2xl tracking-tight text-slate-900 hidden sm:block">Kampus<span class="text-indigo-600">SIM</span></span>
                     </div>
 
-                    <!-- Desktop Menu -->
-                    <div class="hidden lg:flex space-x-1">
-                        <a href="{{ route('dashboard') }}" class="px-3 py-2 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('dashboard') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50' }}">
+                    <!-- Menu (Visible on all screens) -->
+                    <div class="flex items-center space-x-1 overflow-x-auto no-scrollbar pb-1 sm:pb-0">
+                        <a href="{{ route('dashboard') }}" class="whitespace-nowrap px-3 py-2 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('dashboard') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50' }}">
                             Dashboard
                         </a>
-                        <a href="{{ route('mahasiswas.index') }}" class="px-3 py-2 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('mahasiswas*') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50' }}">
+                        <a href="{{ route('mahasiswas.index') }}" class="whitespace-nowrap px-3 py-2 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('mahasiswas*') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50' }}">
                             Mahasiswa
                         </a>
-                        <a href="{{ route('prodis.index') }}" class="px-3 py-2 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('prodis*') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50' }}">
+                        <a href="{{ route('prodis.index') }}" class="whitespace-nowrap px-3 py-2 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('prodis*') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50' }}">
                             Prodi
                         </a>
-                        <a href="{{ route('mata-kuliah.index') }}" class="px-3 py-2 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('mata-kuliah*') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50' }}">
+                        <a href="{{ route('mata-kuliah.index') }}" class="whitespace-nowrap px-3 py-2 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('mata-kuliah*') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50' }}">
                             Mata Kuliah
                         </a>
-                        <a href="{{ route('krs.index') }}" class="px-3 py-2 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('krs*') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50' }}">
+                        <a href="{{ route('krs.index') }}" class="whitespace-nowrap px-3 py-2 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('krs*') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50' }}">
                             KRS Online
                         </a>
                     </div>
                 </div>
 
-                <!-- Right Side: Profile & Mobile Button -->
-                <div class="flex items-center gap-4">
-                    
-                    <!-- Desktop Profile -->
-                    <div class="hidden lg:flex items-center gap-3 pl-4 border-l border-slate-200">
+                <!-- Right Side: Profile -->
+                <div class="flex items-center gap-4 flex-shrink-0 bg-white pl-2">
+                    <!-- Profile -->
+                    <div class="flex items-center gap-3 pl-4 border-l border-slate-200">
                         <div class="text-right hidden xl:block">
                             <p class="text-sm font-semibold text-slate-900">Administrator</p>
                             <p class="text-xs text-slate-500">admin@kampus.ac.id</p>
@@ -65,49 +64,6 @@
                         <div class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold border-2 border-white shadow-sm">
                             <img class="w-full h-full rounded-full object-cover" src="https://ui-avatars.com/api/?name=Admin+Kampus&background=4f46e5&color=fff" alt="User">
                         </div>
-                    </div>
-
-                    <!-- Mobile Menu Button -->
-                    <div class="flex items-center lg:hidden">
-                        <button @click="mobileMenuOpen = !mobileMenuOpen" class="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-indigo-600 hover:bg-slate-100 focus:outline-none transition-colors">
-                            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                <path :class="{'hidden': mobileMenuOpen, 'inline-flex': !mobileMenuOpen }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                                <path :class="{'hidden': !mobileMenuOpen, 'inline-flex': mobileMenuOpen }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mobile Menu (Dropdown) -->
-        <div x-show="mobileMenuOpen" x-collapse class="lg:hidden border-t border-slate-200 bg-white shadow-lg">
-            <div class="pt-2 pb-3 space-y-1 px-4">
-                <a href="{{ route('dashboard') }}" class="block px-3 py-2 rounded-lg text-base font-medium {{ request()->routeIs('dashboard') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50' }}">
-                    Dashboard
-                </a>
-                <a href="{{ route('mahasiswas.index') }}" class="block px-3 py-2 rounded-lg text-base font-medium {{ request()->routeIs('mahasiswas*') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50' }}">
-                    Mahasiswa
-                </a>
-                <a href="{{ route('prodis.index') }}" class="block px-3 py-2 rounded-lg text-base font-medium {{ request()->routeIs('prodis*') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50' }}">
-                    Program Studi
-                </a>
-                <a href="{{ route('mata-kuliah.index') }}" class="block px-3 py-2 rounded-lg text-base font-medium {{ request()->routeIs('mata-kuliah*') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50' }}">
-                    Mata Kuliah
-                </a>
-                <a href="{{ route('krs.index') }}" class="block px-3 py-2 rounded-lg text-base font-medium {{ request()->routeIs('krs*') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50' }}">
-                    KRS Online
-                </a>
-            </div>
-            <!-- Mobile Profile -->
-            <div class="pt-4 pb-4 border-t border-slate-200 px-4">
-                <div class="flex items-center gap-3">
-                    <div class="flex-shrink-0">
-                        <img class="h-10 w-10 rounded-full" src="https://ui-avatars.com/api/?name=Admin+Kampus&background=4f46e5&color=fff" alt="">
-                    </div>
-                    <div>
-                        <div class="text-base font-medium text-slate-800">Administrator</div>
-                        <div class="text-sm font-medium text-slate-500">admin@kampus.ac.id</div>
                     </div>
                 </div>
             </div>

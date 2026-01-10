@@ -7,9 +7,15 @@ use Illuminate\Http\Request;
 
 class ProdiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $prodis = Prodi::all();
+        $query = Prodi::query();
+
+        if ($request->has('search')) {
+            $query->where('nama', 'like', '%' . $request->search . '%');
+        }
+
+        $prodis = $query->get();
         return view('prodis.index', compact('prodis'));
     }
 

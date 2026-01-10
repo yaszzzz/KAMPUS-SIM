@@ -10,9 +10,17 @@ use Illuminate\Http\Request;
 
 class KrsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $krsData = Krs::with('mahasiswa', 'krsDetails')->get();
+        $query = Krs::with('mahasiswa', 'krsDetails');
+        
+        if ($request->has('search')) {
+            $query->whereHas('mahasiswa', function($q) use ($request) {
+                $q->where('nama', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        $krsData = $query->get();
         return view('krs.index', compact('krsData'));
     }
 
@@ -39,7 +47,11 @@ class KrsController extends Controller
     {
         $krs->load(['mahasiswa', 'krsDetails.mataKuliah']);
         // Get MK logic: bisa semua MK atau filter by prodi mahasiswa. Idealnya by prodi.
-        $mataKuliahs = MataKuliah::where('prodi_id', $krs->mahasiswa->prodi_id)->get();
+        if ($krs->mahasiswa) {
+             $mataKuliahs = MataKuliah::where('prodi_id', $krs->mahasiswa->prodi_id)->get();
+        } else {
+             $mataKuliahs = MataKuliah::all();
+        }
         return view('krs.edit', compact('krs', 'mataKuliahs'));
     }
 
