@@ -12,8 +12,19 @@ Route::get('/', function () {
 
 // Simulate Login - Redirect to Dashboard
 Route::post('/login', function () { 
+    $user = \App\Models\User::where('email', 'admin@kampus.ac.id')->first();
+    if ($user) {
+        auth()->login($user);
+    }
     return redirect()->route('dashboard'); 
 })->name('login');
+
+Route::post('/logout', function () {
+    auth()->logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    return redirect('/');
+})->name('logout');
 
 // Login Page (GET) - Optional if they visit /login directly
 Route::get('/login', function () { 

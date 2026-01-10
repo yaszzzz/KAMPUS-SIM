@@ -17,7 +17,8 @@ class MahasiswaController extends Controller
         }
 
         $mahasiswas = $query->get();
-        return view('mahasiswas.index', compact('mahasiswas'));
+        $prodis = \App\Models\Prodi::all();
+        return view('mahasiswas.index', compact('mahasiswas', 'prodis'));
     }
 
     public function create()

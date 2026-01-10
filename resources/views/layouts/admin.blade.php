@@ -56,13 +56,39 @@
                 <!-- Right Side: Profile -->
                 <div class="flex items-center gap-4 flex-shrink-0 bg-white pl-2">
                     <!-- Profile -->
-                    <div class="flex items-center gap-3 pl-4 border-l border-slate-200">
-                        <div class="text-right hidden xl:block">
-                            <p class="text-sm font-semibold text-slate-900">Administrator</p>
-                            <p class="text-xs text-slate-500">admin@kampus.ac.id</p>
-                        </div>
-                        <div class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold border-2 border-white shadow-sm">
-                            <img class="w-full h-full rounded-full object-cover" src="https://ui-avatars.com/api/?name=Admin+Kampus&background=4f46e5&color=fff" alt="User">
+                    <!-- Profile Dropdown -->
+                    <div class="relative pl-4 border-l border-slate-200" x-data="{ open: false }">
+                        <button @click="open = !open" class="flex items-center focus:outline-none">
+                            <div class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold border-2 border-white shadow-sm hover:shadow-md transition-shadow">
+                                <img class="w-full h-full rounded-full object-cover" src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name ?? 'Guest') }}&background=4f46e5&color=fff" alt="User">
+                            </div>
+                        </button>
+
+                        <!-- Dropdown Menu -->
+                        <div x-show="open" 
+                             @click.outside="open = false"
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 scale-95"
+                             x-transition:enter-end="opacity-100 scale-100"
+                             x-transition:leave="transition ease-in duration-75"
+                             x-transition:leave-start="opacity-100 scale-100"
+                             x-transition:leave-end="opacity-0 scale-95"
+                             class="absolute right-0 z-50 mt-2 w-56 origin-top-right rounded-xl bg-white border border-slate-100 shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none"
+                             style="display: none;">
+                            
+                            <div class="p-4 border-b border-slate-50">
+                                <p class="text-sm font-bold text-slate-900 dark:text-slate-800">{{ auth()->user()->name ?? 'Guest' }}</p>
+                                <p class="text-xs text-slate-500 truncate mt-0.5">{{ auth()->user()->email ?? 'guest@kampus.ac.id' }}</p>
+                            </div>
+                            
+                            <div class="p-2">
+                                <form method="POST" action="{{ route('logout') }}" class="w-full">
+                                    @csrf
+                                    <button type="submit" class="flex w-full items-center px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+                                        Sign Out
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
