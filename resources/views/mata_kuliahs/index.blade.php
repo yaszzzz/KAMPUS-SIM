@@ -3,7 +3,7 @@
 @section('title', 'Daftar Mata Kuliah')
 
 @section('content')
-<div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+<div class="w-full p-8 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden transition-colors">
     <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-50/50">
         <div>
             <h2 class="text-xl font-bold text-slate-800">Mata Kuliah</h2>
@@ -47,7 +47,7 @@
                         </span>
                     </td>
                     <td class="px-6 py-4 text-center">
-                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-50 text-purple-700 border border-purple-100">
+                         <span class="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-500 border border-blue-100 dark:border-blue-800">
                             {{ $mk->prodi->nama }}
                         </span>
                     </td>

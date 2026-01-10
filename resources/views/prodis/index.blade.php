@@ -3,11 +3,11 @@
 @section('title', 'Daftar Program Studi')
 
 @section('content')
-<div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden transition-colors">
+<div class="w-full p-8 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden transition-colors">
     <div class="p-6 border-b border-slate-100 dark:border-slate-700 flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-50/50 dark:bg-slate-800/50">
         <div>
-            <h2 class="text-xl font-bold text-slate-800 dark:text-white">Program Studi</h2>
-            <p class="text-slate-500 dark:text-slate-400 text-sm">Kelola daftar program studi kampus</p>
+            <h2 class="text-xl font-bold text-black">Program Studi</h2>
+            <p class="text-black dark:text-slate-400 text-sm">Kelola daftar program studi kampus</p>
         </div>
         <a href="{{ route('prodis.create') }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors shadow-sm hover:shadow-md">
             <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -18,8 +18,8 @@
     </div>
 
     <div class="overflow-x-auto">
-        <table class="w-full text-left text-sm text-slate-600 dark:text-slate-300">
-            <thead class="bg-slate-50 dark:bg-slate-700/50 text-slate-500 dark:text-slate-400 font-bold uppercase text-xs tracking-wider border-b border-slate-200 dark:border-slate-700">
+        <table class="w-full text-left text-sm text-black dark:text-slate-300">
+            <thead class="bg-slate-50 dark:bg-slate-700/50 text-black dark:text-slate-400 font-bold uppercase text-xs tracking-wider border-b border-slate-200 dark:border-slate-700">
                 <tr>
                     <th class="px-6 py-4 w-16">No</th>
                     <th class="px-6 py-4">Nama Program Studi</th>
@@ -29,7 +29,7 @@
             <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
                 @forelse($prodis as $prodi)
                 <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
-                    <td class="px-6 py-4 font-medium text-slate-900 dark:text-white">{{ $loop->iteration }}</td>
+                    <td class="px-6 py-4 font-medium text-black">{{ $loop->iteration }}</td>
                     <td class="px-6 py-4">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-lg bg-teal-50 dark:bg-teal-900/30 flex items-center justify-center text-teal-600 dark:text-teal-400">
@@ -39,7 +39,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
                                 </svg>
                             </div>
-                            <span class="font-bold text-slate-800 dark:text-white text-base">{{ $prodi->nama }}</span>
+                            <span class="font-bold text-black text-base">{{ $prodi->nama }}</span>
                         </div>
                     </td>
                     <td class="px-6 py-4 text-center">
@@ -63,7 +63,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="3" class="px-6 py-12 text-center text-slate-400">
+                    <td colspan="3" class="px-6 py-12 text-center text-black">
                         <p class="text-lg font-medium">Belum ada data program studi</p>
                     </td>
                 </tr>

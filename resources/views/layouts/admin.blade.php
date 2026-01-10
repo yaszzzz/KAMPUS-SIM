@@ -29,7 +29,7 @@
                 <div class="flex items-center gap-8">
                     <!-- Logo -->
                     <div class="flex-shrink-0 flex items-center gap-3">
-                        <div class="w-9 h-9 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg transform rotate-3">K</div>
+                        <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg transform rotate-3">K</div>
                         <span class="font-bold text-2xl tracking-tight text-slate-900">Kampus<span class="text-indigo-600">SIM</span></span>
                     </div>
 
