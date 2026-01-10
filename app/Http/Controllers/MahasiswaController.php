@@ -8,9 +8,15 @@ use Illuminate\Http\Request;
 
 class MahasiswaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $mahasiswas = Mahasiswa::with('prodi')->get();
+        $query = Mahasiswa::with('prodi');
+        
+        if ($request->has('search')) {
+            $query->where('nama', 'like', '%' . $request->search . '%');
+        }
+
+        $mahasiswas = $query->get();
         return view('mahasiswas.index', compact('mahasiswas'));
     }
 

@@ -8,9 +8,19 @@ use Illuminate\Http\Request;
 
 class MataKuliahController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $mataKuliahs = MataKuliah::with('prodi')->get();
+        $query = MataKuliah::with('prodi');
+
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('nama', 'like', '%' . $search . '%')
+                  ->orWhere('kode', 'like', '%' . $search . '%');
+            });
+        }
+
+        $mataKuliahs = $query->get();
         return view('mata_kuliahs.index', compact('mataKuliahs'));
     }
 

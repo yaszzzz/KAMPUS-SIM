@@ -38,7 +38,7 @@ Route::get('/dashboard', function () {
 Route::resource('prodis', ProdiController::class);
 Route::resource('mata-kuliah', MataKuliahController::class);
 Route::resource('mahasiswas', MahasiswaController::class);
-Route::resource('krs', KrsController::class);
+Route::resource('krs', KrsController::class)->parameters(['krs' => 'krs']);
 
 Route::post('krs/{krs}/detail', [KrsController::class, 'storeDetail'])->name('krs-detail.store');
 Route::delete('krs-details/{krsDetail}', [KrsController::class, 'destroyDetail'])->name('krs-detail.destroy');
