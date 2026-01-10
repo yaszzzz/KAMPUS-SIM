@@ -3,11 +3,11 @@
 @section('title', 'Daftar Mahasiswa')
 
 @section('content')
-<div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden transition-colors">
+<div class="w-full p-8 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden transition-colors">
     <div class="p-6 border-b border-slate-100 dark:border-slate-700 flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-50/50 dark:bg-slate-800/50">
         <div>
-            <h2 class="text-xl font-bold text-slate-800 dark:text-white">Data Mahasiswa</h2>
-            <p class="text-slate-500 dark:text-slate-400 text-sm">Kelola informasi mahasiswa terdaftar</p>
+            <h2 class="text-xl font-bold text-black">Data Mahasiswa</h2>
+            <p class="text-black text-sm">Kelola informasi mahasiswa terdaftar</p>
         </div>
         <a href="{{ route('mahasiswas.create') }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors shadow-sm hover:shadow-md">
             <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -18,7 +18,7 @@
     </div>
 
     <div class="overflow-x-auto">
-        <table class="w-full text-left text-sm text-slate-600 dark:text-slate-300">
+        <table class="w-full text-left text-sm text-black">
             <thead class="bg-slate-50 dark:bg-slate-700/50 text-slate-500 dark:text-slate-400 font-bold uppercase text-xs tracking-wider border-b border-slate-200 dark:border-slate-700">
                 <tr>
                     <th class="px-6 py-4">No</th>
@@ -32,8 +32,8 @@
             <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
                 @forelse($mahasiswas as $mhs)
                 <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
-                    <td class="px-6 py-4 font-medium text-slate-900 dark:text-white">{{ $loop->iteration }}</td>
-                    <td class="px-6 py-4 font-mono text-slate-700 dark:text-slate-300">{{ $mhs->nim }}</td>
+                    <td class="px-6 py-4 font-medium text-black">{{ $loop->iteration }}</td>
+                    <td class="px-6 py-4 font-mono text-black">{{ $mhs->nim }}</td>
                     <td class="px-6 py-4">
                         <div class="flex items-center gap-3">
                             <div class="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold text-xs uppercase">
@@ -44,7 +44,7 @@
                         <div class="text-xs text-slate-400 mt-1 pl-11">{{ $mhs->email }}</div>
                     </td>
                     <td class="px-6 py-4 text-center">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-100 dark:border-blue-800">
+                        <span class="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-500 border border-blue-100 dark:border-blue-800">
                             {{ $mhs->prodi->nama }}
                         </span>
                     </td>

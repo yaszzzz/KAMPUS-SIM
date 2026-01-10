@@ -2,24 +2,59 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Prodi;
+use App\Models\MataKuliah;
+use App\Models\Mahasiswa;
+use App\Models\Krs;
+use App\Models\KrsDetail;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
     /**
      * Seed the application's database.
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // 1. Create specific Prodis
+        $prodis = collect([
+            ['kode' => 'TI', 'nama' => 'Teknik Informatika', 'jenjang' => 'S1'],
+            ['kode' => 'SI', 'nama' => 'Sistem Informasi', 'jenjang' => 'S1'],
+            ['kode' => 'DKV', 'nama' => 'Desain Komunikasi Visual', 'jenjang' => 'S1'],
+        ])->map(function ($prodiData) {
+            return Prodi::factory()->create($prodiData);
+        });
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // 2. Create Mata Kuliah for each Prodi
+        $prodis->each(function ($prodi) {
+            MataKuliah::factory()->count(10)->create([
+                'prodi_id' => $prodi->id,
+            ]);
+        });
+
+        // 3. Create 15 Mahasiswas distributed across Prodis
+        $mahasiswas = Mahasiswa::factory()->count(15)->make()->each(function ($mahasiswa) use ($prodis) {
+            $mahasiswa->prodi_id = $prodis->random()->id;
+            $mahasiswa->save();
+        });
+
+        // 4. Create KRS for each Mahasiswa and populate it with courses
+        $mahasiswas->each(function ($mahasiswa) {
+            // Create a KRS
+            $krs = Krs::factory()->create([
+                'mahasiswa_id' => $mahasiswa->id,
+                'semester' => 'Ganjil', 
+            ]);
+
+            // Assign 4-6 random courses from their Prodi
+            $availableCourses = MataKuliah::where('prodi_id', $mahasiswa->prodi_id)->inRandomOrder()->take(rand(4, 6))->get();
+
+            foreach ($availableCourses as $course) {
+                KrsDetail::factory()->create([
+                    'krs_id' => $krs->id,
+                    'mata_kuliah_id' => $course->id,
+                ]);
+            }
+        });
     }
 }

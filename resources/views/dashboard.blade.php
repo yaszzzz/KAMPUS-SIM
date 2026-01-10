@@ -118,7 +118,7 @@
         <!-- Quick Actions -->
        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
-    <a href="{{ route('mahasiswas.create') }}" 
+    <a href="{{ route('mahasiswas.index') }}" 
        class="group bg-white p-8 rounded-xl border-2 border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/10 transition-all duration-300 flex flex-col items-center justify-center gap-4 text-center h-full relative overflow-hidden">
         
         <div class="w-16 h-16 rounded-full bg-slate-50 border border-slate-100 text-slate-400 flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white group-hover:border-emerald-500 transition-all duration-300 shadow-sm group-hover:shadow-emerald-200 group-hover:scale-110">
