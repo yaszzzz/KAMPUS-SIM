@@ -16,6 +16,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // 0. Create Admin User
+        \App\Models\User::factory()->create([
+            'name' => 'Administrator',
+            'email' => 'admin@kampus.ac.id',
+             'password' => bcrypt('password'),
+        ]);
+
         // 1. Create specific Prodis
         $prodis = collect([
             ['kode' => 'TI', 'nama' => 'Teknik Informatika', 'jenjang' => 'S1'],

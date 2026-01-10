@@ -21,7 +21,8 @@ class MataKuliahController extends Controller
         }
 
         $mataKuliahs = $query->get();
-        return view('mata_kuliahs.index', compact('mataKuliahs'));
+        $prodis = \App\Models\Prodi::all();
+        return view('mata_kuliahs.index', compact('mataKuliahs', 'prodis'));
     }
 
     public function create()
