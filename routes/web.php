@@ -10,11 +10,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Placeholder Auth Routes to prevent Landing Page crash
-Route::get('/login', function () { return "Login Feature Coming Soon"; })->name('login');
-Route::post('/login', function () { return "Login Process Coming Soon"; });
-Route::get('/register', function () { return "Register Feature Coming Soon"; })->name('register');
+// Simulate Login - Redirect to Dashboard
+Route::post('/login', function () { 
+    return redirect()->route('dashboard'); 
+})->name('login');
+
+// Login Page (GET) - Optional if they visit /login directly
+Route::get('/login', function () { 
+    return redirect()->route('dashboard'); // Or show a view if implementing real auth later
+});
+
+Route::get('/register', function () { return redirect()->route('dashboard'); })->name('register');
 Route::get('/forgot-password', function () { return "Forgot Password Feature Coming Soon"; })->name('password.request');
+
+// Dashboard Route
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
 
 Route::resource('prodis', ProdiController::class);
 Route::resource('mata-kuliah', MataKuliahController::class);
