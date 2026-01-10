@@ -19,10 +19,10 @@
         [x-cloak] { display: none !important; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased" x-data="{ mobileMenuOpen: false }">
+<body class="bg-slate-50 text-slate-800 antialiased transition-colors duration-300" x-data="{ mobileMenuOpen: false }">
 
     <!-- Top Navigation Bar -->
-    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20">
                 <!-- Left Side: Logo & Desktop Menu -->
@@ -55,6 +55,7 @@
 
                 <!-- Right Side: Profile & Mobile Button -->
                 <div class="flex items-center gap-4">
+                    
                     <!-- Desktop Profile -->
                     <div class="hidden lg:flex items-center gap-3 pl-4 border-l border-slate-200">
                         <div class="text-right hidden xl:block">
