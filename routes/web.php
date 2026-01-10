@@ -25,7 +25,14 @@ Route::get('/forgot-password', function () { return "Forgot Password Feature Com
 
 // Dashboard Route
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $mahasiswaCount = \App\Models\Mahasiswa::count();
+    $prodiCount = \App\Models\Prodi::count();
+    $mataKuliahCount = \App\Models\MataKuliah::count();
+    $krsCount = \App\Models\Krs::count();
+    
+    // Optional: Fetch recent activities or other data
+    
+    return view('dashboard', compact('mahasiswaCount', 'prodiCount', 'mataKuliahCount', 'krsCount'));
 })->name('dashboard');
 
 Route::resource('prodis', ProdiController::class);
