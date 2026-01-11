@@ -24,7 +24,7 @@
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
 </head>
-<body class="antialiased bg-slate-50 text-slate-800" x-data="{ showLoginModal: false }">
+<body class="antialiased bg-slate-50 text-slate-800" x-data="{ showLoginModal: false, showRegisterModal: false }">
 
     <!-- 1. Header / Navigation Bar -->
     <header class="fixed w-full top-0 z-50 transition-all duration-300 glass-nav shadow-sm">
@@ -43,7 +43,6 @@
                     <a href="#" class="text-slate-600 hover:text-indigo-600 font-medium transition-colors">Home</a>
                     <a href="#features" class="text-slate-600 hover:text-indigo-600 font-medium transition-colors">Fitur</a>
                     <a href="#about" class="text-slate-600 hover:text-indigo-600 font-medium transition-colors">Tentang</a>
-                    <a href="#news" class="text-slate-600 hover:text-indigo-600 font-medium transition-colors">Berita</a>
                     <a href="#contact" class="text-slate-600 hover:text-indigo-600 font-medium transition-colors">Kontak</a>
                 </nav>
 
@@ -61,7 +60,7 @@
                         @else
                             <a href="{{ route('login') }}" @click.prevent="showLoginModal = true" class="font-medium text-slate-600 hover:text-indigo-600 transition-colors">Login</a>
                             @if (Route::has('register'))
-                                <a href="{{ route('register') }}" class="px-5 py-2.5 rounded-full bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                                <a href="{{ route('register') }}" @click.prevent="showRegisterModal = true" class="px-5 py-2.5 rounded-full bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
                                     Daftar
                                 </a>
                             @endif
@@ -80,6 +79,7 @@
             </div>
         </div>
     </header>
+
 
     <!-- 3. Hero Section -->
     <div class="relative pt-20 pb-16 md:pt-32 md:pb-24 overflow-hidden">
@@ -130,7 +130,7 @@
     </div>
 
     <!-- 4. Main Content - Features -->
-    <section id="features" class="py-20 bg-white">
+    <section id="features" class="py-20 bg-white-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16">
                 <h2 class="text-indigo-600 font-semibold tracking-wide uppercase text-sm mb-2">Fitur Unggulan</h2>
@@ -152,7 +152,7 @@
 
                 <!-- Feature 2 -->
                 <div class="group p-8 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                    <div class="w-14 h-14 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-600 mb-6 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                    <div class="w-14 h-14 rounded-xl bg-indigo-100 flex items-center justify-center text-indigo-600 mb-6 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                         </svg>
@@ -163,7 +163,7 @@
 
                 <!-- Feature 3 -->
                 <div class="group p-8 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                    <div class="w-14 h-14 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600 mb-6 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                    <div class="w-14 h-14 rounded-xl bg-indigo-100 flex items-center justify-center text-indigo-600 mb-6 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                         </svg>
@@ -174,7 +174,7 @@
 
                 <!-- Feature 4 -->
                 <div class="group p-8 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                    <div class="w-14 h-14 rounded-xl bg-purple-100 flex items-center justify-center text-purple-600 mb-6 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                    <div class="w-14 h-14 rounded-xl bg-indigo-100 flex items-center justify-center text-indigo-600 mb-6 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
@@ -200,7 +200,7 @@
                             <p class="text-white font-medium">"Lingkungan belajar yang mendukung inovasi"</p>
                         </div>
                     </div>
-                </div>
+                </div>  
                 
                 <div class="lg:w-1/2">
                     <h2 class="text-indigo-600 font-semibold tracking-wide uppercase text-sm mb-2">Tentang Kami</h2>
@@ -235,25 +235,6 @@
                         </svg>
                     </a>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 6. Call To Action (CTA) Section -->
-    <section class="py-20 relative bg-indigo-900 overflow-hidden">
-        <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">Siap Memulai Perjalanan Anda?</h2>
-            <p class="text-indigo-200 text-xl max-w-2xl mx-auto mb-10">
-                Jangan lewatkan kesempatan untuk bergabung dengan ribuan mahasiswa berprestasi lainnya.
-            </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="{{ Route::has('register') ? route('register') : '#' }}" class="px-8 py-4 rounded-full bg-white text-indigo-900 font-bold hover:bg-slate-100 transition-colors shadow-lg">
-                    Daftar Sekarang
-                </a>
-                <a href="#contact" class="px-8 py-4 rounded-full bg-transparent border border-indigo-400 text-white font-semibold hover:bg-indigo-800 transition-colors">
-                    Hubungi Kami
-                </a>
             </div>
         </div>
     </section>
@@ -406,12 +387,100 @@
 
                     <div class="mt-6 text-center text-sm text-slate-500">
                         Belum punya akun? 
-                        <a href="{{ Route::has('register') ? route('register') : '#' }}" class="font-medium text-indigo-600 hover:text-indigo-500">Daftar di sini</a>
+                        <a href="#" @click.prevent="showLoginModal = false; showRegisterModal = true" class="font-medium text-indigo-600 hover:text-indigo-500">Daftar di sini</a>
                     </div>
                 </div>
                 
                 <div class="bg-slate-50 px-8 py-4 border-t border-slate-100 text-center text-xs text-slate-400">
                     &copy; 2026 Kampus SIM. Secure Access.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div x-show="showRegisterModal" 
+         style="display: none;"
+         class="fixed inset-0 z-[100] overflow-y-auto" 
+         aria-labelledby="modal-title" 
+         role="dialog" 
+         aria-modal="true">
+        
+        <!-- Backdrop -->
+        <div x-show="showRegisterModal"
+             x-transition:enter="ease-out duration-300"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="ease-in duration-200"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0"
+             class="fixed inset-0 bg-slate-900/75 backdrop-blur-sm transition-opacity" 
+             @click="showRegisterModal = false"></div>
+
+        <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+            <!-- Modal Panel -->
+            <div x-show="showRegisterModal"
+                 x-transition:enter="ease-out duration-300"
+                 x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                 x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave="ease-in duration-200"
+                 x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                 class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-md border border-slate-100">
+                
+                <!-- Close Button -->
+                <button @click="showRegisterModal = false" class="absolute right-4 top-4 text-slate-400 hover:text-slate-600 transition-colors">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+
+                <div class="px-8 py-8">
+                    <div class="text-center mb-6">
+                        <div class="mx-auto w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center text-indigo-600 mb-4">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900">Buat Akun Baru</h3>
+                        <p class="text-slate-500 mt-1 text-sm">Daftarkan diri untuk mengakses sistem</p>
+                    </div>
+
+                    <form method="POST" action="{{ route('register.store') }}" class="space-y-4">
+                        @csrf
+                        <div>
+                            <label for="reg_name" class="block text-sm font-medium text-slate-700 mb-1">Nama Lengkap</label>
+                            <input type="text" name="name" id="reg_name" required class="block w-full rounded-lg border-slate-300 shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 p-2.5 border text-sm" placeholder="Masukkan nama lengkap">
+                        </div>
+
+                        <div>
+                            <label for="reg_email" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                            <input type="email" name="email" id="reg_email" required class="block w-full rounded-lg border-slate-300 shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 p-2.5 border text-sm" placeholder="nama@kampus.ac.id">
+                        </div>
+
+                        <div>
+                            <label for="reg_password" class="block text-sm font-medium text-slate-700 mb-1">Password</label>
+                            <input type="password" name="password" id="reg_password" required class="block w-full rounded-lg border-slate-300 shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 p-2.5 border text-sm" placeholder="Minimal 8 karakter">
+                        </div>
+
+                        <div>
+                            <label for="reg_password_confirmation" class="block text-sm font-medium text-slate-700 mb-1">Konfirmasi Password</label>
+                            <input type="password" name="password_confirmation" id="reg_password_confirmation" required class="block w-full rounded-lg border-slate-300 shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 p-2.5 border text-sm" placeholder="Ulangi password">
+                        </div>
+
+                        <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all hover:shadow-lg mt-2">
+                            Daftar Sekarang
+                        </button>
+                    </form>
+
+                    <div class="mt-6 text-center text-sm text-slate-500">
+                        Sudah punya akun? 
+                        <a href="#" @click.prevent="showRegisterModal = false; showLoginModal = true" class="font-medium text-indigo-600 hover:text-indigo-500">Masuk di sini</a>
+                    </div>
+                </div>
+                
+                <div class="bg-slate-50 px-8 py-4 border-t border-slate-100 text-center text-xs text-slate-400">
+                    &copy; 2026 Kampus SIM. Secure Registration.
                 </div>
             </div>
         </div>

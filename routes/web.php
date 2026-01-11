@@ -26,31 +26,55 @@ Route::post('/logout', function () {
     return redirect('/');
 })->name('logout');
 
-// Login Page (GET) - Optional if they visit /login directly
+// Login Page (GET) - Redirect to welcome page for login
 Route::get('/login', function () { 
-    return redirect()->route('dashboard'); // Or show a view if implementing real auth later
-});
+    return redirect('/'); 
+})->name('login.show');
 
-Route::get('/register', function () { return redirect()->route('dashboard'); })->name('register');
+Route::get('/register', function () { 
+    return view('auth.register'); 
+})->name('register');
+
+Route::post('/register', function () { 
+    $validated = request()->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|string|min:8|confirmed',
+    ]);
+
+    $user = \App\Models\User::create([
+        'name' => $validated['name'],
+        'email' => $validated['email'],
+        'password' => bcrypt($validated['password']),
+    ]);
+
+    auth()->login($user);
+
+    return redirect()->route('dashboard')->with('success', 'Registrasi berhasil!');
+})->name('register.store');
+
 Route::get('/forgot-password', function () { return "Forgot Password Feature Coming Soon"; })->name('password.request');
 
-// Dashboard Route
-Route::get('/dashboard', function () {
-    $mahasiswaCount = \App\Models\Mahasiswa::count();
-    $prodiCount = \App\Models\Prodi::count();
-    $mataKuliahCount = \App\Models\MataKuliah::count();
-    $krsCount = \App\Models\Krs::count();
-    
-    // Optional: Fetch recent activities or other data
-    
-    return view('dashboard', compact('mahasiswaCount', 'prodiCount', 'mataKuliahCount', 'krsCount'));
-})->name('dashboard');
+// Protected Routes - Require Authentication
+Route::middleware('auth')->group(function () {
+    // Dashboard Route
+    Route::get('/dashboard', function () {
+        $mahasiswaCount = \App\Models\Mahasiswa::count();
+        $prodiCount = \App\Models\Prodi::count();
+        $mataKuliahCount = \App\Models\MataKuliah::count();
+        $krsCount = \App\Models\Krs::count();
+        
+        return view('dashboard', compact('mahasiswaCount', 'prodiCount', 'mataKuliahCount', 'krsCount'));
+    })->name('dashboard');
 
-Route::resource('prodis', ProdiController::class);
-Route::resource('mata-kuliah', MataKuliahController::class);
-Route::resource('mahasiswas', MahasiswaController::class);
-Route::resource('krs', KrsController::class)->parameters(['krs' => 'krs']);
+    // Resource Routes
+    Route::resource('prodis', ProdiController::class);
+    Route::resource('mata-kuliah', MataKuliahController::class);
+    Route::resource('mahasiswas', MahasiswaController::class);
+    Route::resource('krs', KrsController::class)->parameters(['krs' => 'krs']);
 
-Route::post('krs/{krs}/detail', [KrsController::class, 'storeDetail'])->name('krs-detail.store');
-Route::delete('krs-details/{krsDetail}', [KrsController::class, 'destroyDetail'])->name('krs-detail.destroy');
-Route::get('krs/{krs}/print', [KrsController::class, 'print'])->name('krs.print');
+    // KRS Detail Routes
+    Route::post('krs/{krs}/detail', [KrsController::class, 'storeDetail'])->name('krs-detail.store');
+    Route::delete('krs-details/{krsDetail}', [KrsController::class, 'destroyDetail'])->name('krs-detail.destroy');
+    Route::get('krs/{krs}/print', [KrsController::class, 'print'])->name('krs.print');
+});
