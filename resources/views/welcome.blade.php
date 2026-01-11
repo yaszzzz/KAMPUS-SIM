@@ -238,6 +238,24 @@
             </div>
         </div>
     </section>
+     <!-- 6. Call To Action (CTA) Section -->
+    <section class="py-20 relative bg-indigo-900 overflow-hidden">
+        <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">Siap Memulai Perjalanan Anda?</h2>
+            <p class="text-indigo-200 text-xl max-w-2xl mx-auto mb-10">
+                Jangan lewatkan kesempatan untuk bergabung dengan ribuan mahasiswa berprestasi lainnya.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="{{ Route::has('register') ? route('register') : '#' }}" class="px-8 py-4 rounded-full bg-white text-indigo-900 font-bold hover:bg-slate-100 transition-colors shadow-lg">
+                    Daftar Sekarang
+                </a>
+                <a href="#contact" class="px-8 py-4 rounded-full bg-transparent border border-indigo-400 text-white font-semibold hover:bg-indigo-800 transition-colors">
+                    Hubungi Kami
+                </a>
+            </div>
+        </div>
+    </section>
 
     <!-- 7. Footer -->
     <footer class="bg-slate-900 text-slate-300 py-12 border-t border-slate-800">
