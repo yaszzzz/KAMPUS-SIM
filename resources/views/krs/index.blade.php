@@ -3,7 +3,17 @@
 @section('title', 'KRS Online')
 
 @section('content')
-<div class="w-full p-8 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden transition-colors">
+<div class="w-full p-8 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden transition-colors"
+     x-data="{ 
+        open: false, 
+        form: { mahasiswa_id: '', tahun_ajaran: '', semester: 'Ganjil' },
+        openModal() {
+            this.form.mahasiswa_id = '';
+            this.form.tahun_ajaran = '';
+            this.form.semester = 'Ganjil';
+            this.open = true;
+        }
+     }">
     <div class="p-6 mb-6 border-b border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-50/50">
         <div>
             <h2 class="text-xl font-bold text-slate-800">Kartu Rencana Studi</h2>
@@ -32,12 +42,12 @@
                 </button>
             </div>
 
-            <a href="{{ route('krs.create') }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors shadow-sm hover:shadow-md">
+            <button @click="openModal()" class="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors shadow-sm hover:shadow-md">
                 <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                 </svg>
                 Buat KRS Baru
-            </a>
+            </button>
         </div>
     </div>
 
@@ -114,6 +124,77 @@
                 @endforelse
             </tbody>
         </table>
+    </div>
+
+    <!-- Modal Form -->
+    <div x-show="open" 
+         x-cloak
+         class="fixed inset-0 z-50 overflow-y-auto" 
+         aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        
+        <!-- Backdrop -->
+        <div x-show="open" 
+             x-transition:enter="ease-out duration-200"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="ease-in duration-150"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0"
+             class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" 
+             @click="open = false"></div>
+
+        <div class="flex min-h-screen items-center justify-center p-4">
+            <div x-show="open" 
+                 x-transition:enter="ease-out duration-200"
+                 x-transition:enter-start="opacity-0 scale-95"
+                 x-transition:enter-end="opacity-100 scale-100"
+                 x-transition:leave="ease-in duration-150"
+                 x-transition:leave-start="opacity-100 scale-100"
+                 x-transition:leave-end="opacity-0 scale-95"
+                 class="relative w-full max-w-sm bg-white rounded-xl shadow-2xl ring-1 ring-slate-900/5">
+                
+                <form action="{{ route('krs.store') }}" method="POST">
+                    @csrf
+                    
+                    <!-- Header -->
+                    <div class="px-5 py-4 border-b border-slate-100">
+                        <h3 class="text-base font-semibold text-slate-800">Buat KRS Baru</h3>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="px-5 py-4 space-y-3">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-600 mb-1">Mahasiswa</label>
+                            <select name="mahasiswa_id" x-model="form.mahasiswa_id" class="w-full px-3 py-1.5 text-sm rounded-md border border-slate-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none transition-all bg-white" required>
+                                <option value="" disabled>Pilih Mahasiswa</option>
+                                @foreach($mahasiswas as $mhs)
+                                    <option value="{{ $mhs->id }}">{{ $mhs->nim }} - {{ $mhs->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-medium text-slate-600 mb-1">Tahun Ajaran</label>
+                                <input type="text" name="tahun_ajaran" x-model="form.tahun_ajaran" class="w-full px-3 py-1.5 text-sm rounded-md border border-slate-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none transition-all" required placeholder="2023/2024">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-600 mb-1">Semester</label>
+                                <select name="semester" x-model="form.semester" class="w-full px-3 py-1.5 text-sm rounded-md border border-slate-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none transition-all bg-white" required>
+                                    <option value="Ganjil">Ganjil</option>
+                                    <option value="Genap">Genap</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="px-5 py-3 bg-slate-50 border-t border-slate-100 flex justify-end gap-2 rounded-b-xl">
+                        <button type="button" @click="open = false" class="px-3 py-1.5 text-sm font-medium text-slate-600 hover:text-slate-800 hover:bg-slate-100 rounded-md transition-colors">Batal</button>
+                        <button type="submit" class="px-4 py-1.5 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-md transition-colors shadow-sm">Lanjut</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 @endsection

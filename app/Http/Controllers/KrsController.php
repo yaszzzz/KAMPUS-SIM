@@ -21,7 +21,8 @@ class KrsController extends Controller
         }
 
         $krsData = $query->get();
-        return view('krs.index', compact('krsData'));
+        $mahasiswas = Mahasiswa::all();
+        return view('krs.index', compact('krsData', 'mahasiswas'));
     }
 
     public function create()

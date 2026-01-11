@@ -143,67 +143,60 @@
         
         <!-- Backdrop -->
         <div x-show="open" 
-             x-transition:enter="ease-out duration-300"
+             x-transition:enter="ease-out duration-200"
              x-transition:enter-start="opacity-0"
              x-transition:enter-end="opacity-100"
-             x-transition:leave="ease-in duration-200"
+             x-transition:leave="ease-in duration-150"
              x-transition:leave-start="opacity-100"
              x-transition:leave-end="opacity-0"
-             class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" 
+             class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" 
              @click="open = false"></div>
 
-        <div class="flex min-h-screen items-center justify-center p-4 text-center sm:p-0">
+        <div class="flex min-h-screen items-center justify-center p-4">
             <div x-show="open" 
-                 x-transition:enter="ease-out duration-300"
-                 x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                 x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                 x-transition:leave="ease-in duration-200"
-                 x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-                 x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                 class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl">
+                 x-transition:enter="ease-out duration-200"
+                 x-transition:enter-start="opacity-0 scale-95"
+                 x-transition:enter-end="opacity-100 scale-100"
+                 x-transition:leave="ease-in duration-150"
+                 x-transition:leave-start="opacity-100 scale-100"
+                 x-transition:leave-end="opacity-0 scale-95"
+                 class="relative w-full max-w-md bg-white rounded-xl shadow-2xl ring-1 ring-slate-900/5">
                 
-                <form :action="isEditing ? '{{ url('mahasiswas') }}/' + form.id : '{{ route('mahasiswas.store') }}'" method="POST" class="p-6">
+                <form :action="isEditing ? '{{ url('mahasiswas') }}/' + form.id : '{{ route('mahasiswas.store') }}'" method="POST">
                     @csrf
                     <template x-if="isEditing">
                         <input type="hidden" name="_method" value="PUT">
                     </template>
                     
-                    <div class="mb-4">
-                        <h3 class="text-lg font-medium leading-6 text-gray-900" x-text="isEditing ? 'Edit Mahasiswa' : 'Tambah Mahasiswa'"></h3>
+                    <!-- Header -->
+                    <div class="px-5 py-4 border-b border-slate-100">
+                        <h3 class="text-base font-semibold text-slate-800" x-text="isEditing ? 'Edit Mahasiswa' : 'Tambah Mahasiswa'"></h3>
                     </div>
 
-                    <div class="space-y-4">
-                        <div class="grid grid-cols-2 gap-4">
-                            <!-- NIM -->
+                    <!-- Body -->
+                    <div class="px-5 py-4 space-y-3">
+                        <div class="grid grid-cols-2 gap-3">
                             <div>
-                                <label for="nim" class="block text-sm font-medium text-slate-700">NIM</label>
-                                <input type="text" name="nim" x-model="form.nim" class="mt-1 w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-200 outline-none transition-all" required placeholder="Contoh: 2023001">
+                                <label class="block text-xs font-medium text-slate-600 mb-1">NIM</label>
+                                <input type="text" name="nim" x-model="form.nim" class="w-full px-3 py-1.5 text-sm rounded-md border border-slate-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none transition-all" required placeholder="2023001">
                             </div>
-
-                            <!-- Angkatan -->
                             <div>
-                                <label for="angkatan" class="block text-sm font-medium text-slate-700">Angkatan</label>
-                                <input type="number" name="angkatan" x-model="form.angkatan" class="mt-1 w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-200 outline-none transition-all" required placeholder="Tahun">
+                                <label class="block text-xs font-medium text-slate-600 mb-1">Angkatan</label>
+                                <input type="number" name="angkatan" x-model="form.angkatan" class="w-full px-3 py-1.5 text-sm rounded-md border border-slate-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none transition-all" required placeholder="2023">
                             </div>
                         </div>
-
-                        <!-- Nama -->
                         <div>
-                            <label for="nama" class="block text-sm font-medium text-slate-700">Nama Lengkap</label>
-                            <input type="text" name="nama" x-model="form.nama" class="mt-1 w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-200 outline-none transition-all" required placeholder="Masukkan nama lengkap">
+                            <label class="block text-xs font-medium text-slate-600 mb-1">Nama Lengkap</label>
+                            <input type="text" name="nama" x-model="form.nama" class="w-full px-3 py-1.5 text-sm rounded-md border border-slate-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none transition-all" required placeholder="Nama mahasiswa">
                         </div>
-
-                        <!-- Email -->
                         <div>
-                            <label for="email" class="block text-sm font-medium text-slate-700">Email</label>
-                            <input type="email" name="email" x-model="form.email" class="mt-1 w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-200 outline-none transition-all" required placeholder="mahasiswa@kampus.ac.id">
+                            <label class="block text-xs font-medium text-slate-600 mb-1">Email</label>
+                            <input type="email" name="email" x-model="form.email" class="w-full px-3 py-1.5 text-sm rounded-md border border-slate-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none transition-all" required placeholder="mahasiswa@kampus.ac.id">
                         </div>
-
-                         <!-- Prodi -->
                         <div>
-                            <label for="prodi_id" class="block text-sm font-medium text-slate-700">Program Studi</label>
-                            <select name="prodi_id" x-model="form.prodi_id" class="mt-1 w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-200 outline-none transition-all bg-white" required>
-                                <option value="" disabled>Pilih Program Studi</option>
+                            <label class="block text-xs font-medium text-slate-600 mb-1">Program Studi</label>
+                            <select name="prodi_id" x-model="form.prodi_id" class="w-full px-3 py-1.5 text-sm rounded-md border border-slate-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none transition-all bg-white" required>
+                                <option value="" disabled>Pilih Prodi</option>
                                 @foreach($prodis as $prodi)
                                     <option value="{{ $prodi->id }}">{{ $prodi->nama }} ({{ $prodi->jenjang }})</option>
                                 @endforeach
@@ -211,9 +204,10 @@
                         </div>
                     </div>
 
-                    <div class="mt-6 flex justify-end gap-3">
-                        <button type="button" @click="open = false" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-lg transition-colors">Batal</button>
-                        <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors shadow-sm" x-text="isEditing ? 'Simpan Perubahan' : 'Simpan'"></button>
+                    <!-- Footer -->
+                    <div class="px-5 py-3 bg-slate-50 border-t border-slate-100 flex justify-end gap-2 rounded-b-xl">
+                        <button type="button" @click="open = false" class="px-3 py-1.5 text-sm font-medium text-slate-600 hover:text-slate-800 hover:bg-slate-100 rounded-md transition-colors">Batal</button>
+                        <button type="submit" class="px-4 py-1.5 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-md transition-colors shadow-sm" x-text="isEditing ? 'Simpan' : 'Tambah'"></button>
                     </div>
                 </form>
             </div>
