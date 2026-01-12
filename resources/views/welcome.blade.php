@@ -43,6 +43,7 @@
                     <a href="#" class="text-slate-600 hover:text-indigo-600 font-medium transition-colors">Home</a>
                     <a href="#features" class="text-slate-600 hover:text-indigo-600 font-medium transition-colors">Fitur</a>
                     <a href="#about" class="text-slate-600 hover:text-indigo-600 font-medium transition-colors">Tentang</a>
+                    <a href="#news" class="text-slate-600 hover:text-indigo-600 font-medium transition-colors">Berita</a>
                     <a href="#contact" class="text-slate-600 hover:text-indigo-600 font-medium transition-colors">Kontak</a>
                 </nav>
 
