@@ -1,59 +1,163 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Kampus SIM
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Kampus SIM adalah aplikasi web sederhana untuk mengelola data akademik kampus. Aplikasi ini dibuat dengan Laravel 12, Blade, Vite, dan Tailwind CSS.
 
-## About Laravel
+## Fitur
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Dashboard ringkasan jumlah mahasiswa, program studi, mata kuliah, dan KRS.
+- Manajemen program studi.
+- Manajemen mata kuliah berdasarkan program studi.
+- Manajemen data mahasiswa.
+- Manajemen KRS mahasiswa, termasuk tambah dan hapus detail mata kuliah.
+- Cetak KRS.
+- Autentikasi sederhana dengan akun admin hasil seeder.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Teknologi
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- PHP 8.2 atau lebih baru
+- Laravel 12
+- SQLite secara default, bisa diganti ke MySQL/MariaDB/PostgreSQL/SQL Server melalui `.env`
+- Node.js dan npm
+- Vite
+- Tailwind CSS 4
 
-## Learning Laravel
+## Persyaratan
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+Pastikan sudah tersedia:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP 8.2+
+- Composer
+- Node.js dan npm
+- Ekstensi PHP yang umum dibutuhkan Laravel, termasuk `pdo`, `mbstring`, `openssl`, `tokenizer`, `xml`, dan `ctype`
 
-## Laravel Sponsors
+## Instalasi
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Clone repository, lalu masuk ke folder proyek.
 
-### Premium Partners
+```bash
+git clone <url-repository>
+cd kampus-sim
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Install dependency PHP dan JavaScript.
 
-## Contributing
+```bash
+composer install
+npm install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Salin konfigurasi environment dan buat application key.
 
-## Code of Conduct
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Jika menggunakan SQLite, buat file database.
 
-## Security Vulnerabilities
+```bash
+touch database/database.sqlite
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Jalankan migration dan seeder.
 
-## License
+```bash
+php artisan migrate --seed
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Jalankan aplikasi.
+
+```bash
+php artisan serve
+npm run dev
+```
+
+Aplikasi dapat dibuka di:
+
+```text
+http://127.0.0.1:8000
+```
+
+## Akun Login
+
+Seeder membuat akun admin berikut:
+
+```text
+Email    : admin@kampus.ac.id
+Password : password
+```
+
+Halaman utama menyediakan simulasi login yang otomatis masuk sebagai admin jika akun tersebut tersedia.
+
+## Perintah Penting
+
+Menjalankan server Laravel:
+
+```bash
+php artisan serve
+```
+
+Menjalankan Vite untuk development:
+
+```bash
+npm run dev
+```
+
+Build asset production:
+
+```bash
+npm run build
+```
+
+Menjalankan test:
+
+```bash
+php artisan test
+```
+
+Menjalankan semua proses development dari script Composer:
+
+```bash
+composer run dev
+```
+
+## Struktur Proyek
+
+```text
+app/Http/Controllers/     Controller untuk Prodi, Mata Kuliah, Mahasiswa, dan KRS
+app/Models/               Model Eloquent aplikasi
+database/migrations/      Skema tabel database
+database/factories/       Factory data dummy
+database/seeders/         Seeder data awal
+resources/views/          Template Blade
+routes/web.php            Definisi rute web
+public/images/            Asset gambar publik
+```
+
+## Rute Utama
+
+| Rute | Keterangan |
+| --- | --- |
+| `/` | Halaman awal |
+| `/dashboard` | Dashboard setelah login |
+| `/prodis` | Data program studi |
+| `/mata-kuliah` | Data mata kuliah |
+| `/mahasiswas` | Data mahasiswa |
+| `/krs` | Data KRS |
+| `/krs/{krs}/print` | Cetak KRS |
+
+Sebagian besar rute aplikasi berada di dalam middleware `auth`, sehingga pengguna harus login terlebih dahulu.
+
+## Catatan Database
+
+Konfigurasi default Laravel di proyek ini memakai SQLite:
+
+```env
+DB_CONNECTION=sqlite
+```
+
+Untuk memakai database lain, ubah nilai koneksi di `.env`, lalu sesuaikan `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, dan `DB_PASSWORD`.
+
+## Lisensi
+
+Proyek ini menggunakan lisensi MIT. Lihat file `LICENSE` untuk detail.
